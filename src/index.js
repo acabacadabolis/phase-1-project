@@ -19,10 +19,11 @@ for(let i = 0; i < 5; i++){
 
             topDisplay.prepend(img)
 
-            if(i=5){
+            if(i===4){
                 // disPokeName.textContent = img.getAttribute('pokemonName').toUpperCase()
                 // disPokeImg.src = img.src
                 displayPokemon(data)
+                console.log(`${i} = ${data.name}`)
                 
             }
             // console.log(data)
@@ -64,7 +65,13 @@ function displayPokemon(pokeObj) {
         .then(species => {
             pokeStat.textContent = `Catch rate: ${species.capture_rate} ${species.flavor_text_entries[5].flavor_text}`
         })
-    disPokeImg.addEventListener('hover', () => {
-        toggl
-    })
+    if(true)    
+        disPokeImg.addEventListener('click', () => {
+            pokeStat.setAttribute(`hidden`, false)
+            console.log(pokeStat.hidden)
+        })
+        disPokeImg.addEventListener('mouseout', () => {
+            pokeStat.setAttribute('hidden', true)
+            console.log(pokeStat.hidden)
+        })
 }
