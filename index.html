@@ -6,16 +6,32 @@
     </head>
     <body>
         <div id="topDisplay">
-            
         </div>
         <div id="mainDisplay">
             <h3 id="pokeName"></h3>
             <img id="displayPokemon" src=""/>
             <div id="pokemonStats"></div>
-            <form id="input-form">
-                <input type="text" name="name"/>
-                <input type="submit"/>
-            </form>
+            <div id="button-container">
+                <form id="input-form">
+                    <input type="text" name="name"/>
+                    <input type="submit"/>
+                </form>
+                <div>
+                    <form id="catch">
+                        <input type="submit" value="Catch"/>
+                    </form>
+                </div>
+              </div>
+        </div>
+
+        <div id="pokemon-box-header">
+            <h3> Pokemon-Box</h3>
+            <p>Your Caught Pokemon!</p>
+        </div>
+        <div id = "pokemon-box" class="popup" onclick="myFunction()">
+                <img class="popuptext" ></img>
+                <span class="popuptext" >Pokemon Name</span>
+                <button id = "button" class="popuptext">Release</button>
         </div>
     </body>
 </html>
