@@ -5,6 +5,8 @@ const topDisplay = document.querySelector('#topDisplay')
 const disPokeName = document.querySelector('#pokeName')
 const disPokeImg = document.querySelector('#displayPokemon')
 const pokeStat = document.querySelector('#pokemonStats')
+const pokeCatch = document.querySelector('#catchrate')
+const pokeDex = document.querySelector('#pokedex')
 const pokeBox = document.querySelector('#pokemon-box')
 const catchButton = document.querySelector('#catch')
 const myPopUp= document.querySelectorAll('.popuptext')
@@ -19,7 +21,7 @@ for(let i = 0; i < 5; i++){
         .then(data => {
             const img = document.createElement('img')
             img.setAttribute('topDisplay', (i+1))
-            img.setAttribute('pokemonName', data.name)
+            img.alt = data.name
             img.src = data.sprites.front_default
             // pokeStat.textContent = `Catch rate :`
 
@@ -68,8 +70,20 @@ function displayPokemon(pokeObj) {
     fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeObj.name}`)
         .then(respo => respo.json())
         .then(species => {
-            pokeStat.textContent = `Catch rate: ${species.capture_rate} ${species.flavor_text_entries[5].flavor_text}`
+            pokeCatch.textContent = `Catch rate: ${species.capture_rate}`
+            pokeDex.textContent = `${species.flavor_text_entries[5].flavor_text}`
         })
+}
+
+disPokeImg.addEventListener('mouseover', () => {
+    pokeStat.toggleAttribute('hidden') 
+    console.log('hidden')
+})
+
+disPokeImg.addEventListener('mouseleave', () => {
+    pokeStat.toggleAttribute('hidden') 
+    console.log('visible')
+})
     // disPokeImg.addEventListener('hover', () => {
     // })
 }
@@ -135,4 +149,3 @@ function myFunction() {
         data.classList.toggle('show')
     })
   }
-
