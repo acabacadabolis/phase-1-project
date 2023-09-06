@@ -13,8 +13,6 @@ const myPopUp= document.querySelectorAll('.popuptext')
 const deleteButton = document.querySelector('#button')
 
 for(let i = 0; i < 5; i++){
-    
-    
     let ranPoke = parseInt(Math.random()*10000) % 151 + 1
     fetch(`https://pokeapi.co/api/v2/pokemon/${ranPoke}`)
         .then(resp => resp.json())
@@ -28,28 +26,17 @@ for(let i = 0; i < 5; i++){
                 img.setAttribute('shiny', 'yes')
             }
             else img.src = data.sprites.front_default
-            // pokeStat.textContent = `Catch rate :`
-
+        
             topDisplay.prepend(img)
 
             if(i===4){
-                // disPokeName.textContent = img.getAttribute('pokemonName').toUpperCase()
-                // disPokeImg.src = img.src
-                if(img.getAttribute('shiny')==='yes' ? displayShinyPokemon(data) : displayPokemon(data));
-                
+                if(img.getAttribute('shiny')==='yes' ? displayShinyPokemon(data) : displayPokemon(data));   
             }
-            // console.log(data)
-            // console.log(parseInt(Math.random()*10000) % 151 + 1)
-            
             
             img.addEventListener('click', () => {
-                // disPokeName.textContent = img.getAttribute('pokemonName').toUpperCase()
-                // disPokeImg.src = img.src
                 if(img.getAttribute('shiny')==='yes' ? displayShinyPokemon(data) : displayPokemon(data));
             })
             })
-    
-    
 }
 
 form.addEventListener('submit', e => {
@@ -59,8 +46,6 @@ form.addEventListener('submit', e => {
     fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`)
         .then(resp => resp.json())
         .then(data => {
-            // disPokeName.textContent = data.name.toUpperCase()
-            // disPokeImg.src = data.sprites.front_default
             if(parseInt(Math.random()*10000) % 3===0 ? displayShinyPokemon(data) :displayPokemon(data));
         })
 })
@@ -100,11 +85,8 @@ disPokeImg.addEventListener('mouseleave', () => {
     pokeStat.toggleAttribute('hidden') 
     console.log('visible')
 })
-    // disPokeImg.addEventListener('hover', () => {
-    // })
 
 catchButton.addEventListener("submit", e => {
-    // debugger
     e.preventDefault()
     const caughtPokemon = {
         'name' : disPokeName.textContent,
@@ -121,8 +103,6 @@ catchButton.addEventListener("submit", e => {
     })
         .then(resp => resp.json())
         .then(pokemon => {
-            
-            // const caughtdiv = document.createElement('div')
             numPokemon += 1
             const caughtPokemonImg = document.createElement ("img")
             const caughtPokemonName = document.createElement ("li")
@@ -134,7 +114,6 @@ catchButton.addEventListener("submit", e => {
                 myPopUp[0].src = caughtPokemonImg.src
                 myPopUp[1].textContent = caughtPokemonName.textContent
                 myPopUp[1].setAttribute('numCaught', caughtPokemonName.getAttribute('numCaught'))
-                // console.log('assign data')
             })
 
             deleteButton.addEventListener("click", e => {
@@ -147,15 +126,10 @@ catchButton.addEventListener("submit", e => {
                 })
                     .then(rsp => rsp.json())
                     .then(data => console.log(`deleting ${caughtPokemonName.textContent}`))
-
                     caughtPokemonName.remove()
               }})
-            // caughtPokemonImg.setAttribute('class', 'popuptext')
-            // caughtPokemonImg.setAttribute('class', '')
-            
-            pokeBox.append(caughtPokemonName)
-            // caughtdiv.append()
 
+            pokeBox.append(caughtPokemonName)
         })
 })
 
