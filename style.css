@@ -78,10 +78,8 @@
     /* margin-top: 500px; */
   }
   
-  .popup button {
-    margin-top: 310px;
     /* color: #c00000; */
-  }
+  
   /* Popup arrow
   .popup .popuptext::after {
      content: ""; 
@@ -97,8 +95,8 @@
   /* Toggle this class when clicking on the popup container (hide and show the popup) */
   .popup .show {
     visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s
+    /* -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s */
   }
   
   /* Add animation (fade in the popup) */
@@ -114,4 +112,10 @@
 
   #button {
     background-color: #737373;
+    width: 50%;
+    margin-top: 0px;
+    position: relative;
+    align-self: flex-end;
+    right: 0;
+    margin-right: auto;
   }
