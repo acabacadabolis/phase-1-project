@@ -3,6 +3,8 @@ const topDisplay = document.querySelector('#topDisplay')
 const disPokeName = document.querySelector('#pokeName')
 const disPokeImg = document.querySelector('#displayPokemon')
 const pokeStat = document.querySelector('#pokemonStats')
+const pokeCatch = document.querySelector('#catchrate')
+const pokeDex = document.querySelector('#pokedex')
 
 for(let i = 0; i < 5; i++){
     
@@ -13,7 +15,7 @@ for(let i = 0; i < 5; i++){
         .then(data => {
             const img = document.createElement('img')
             img.setAttribute('topDisplay', (i+1))
-            img.setAttribute('pokemonName', data.name)
+            img.alt = data.name
             img.src = data.sprites.front_default
             // pokeStat.textContent = `Catch rate :`
 
@@ -23,7 +25,6 @@ for(let i = 0; i < 5; i++){
                 // disPokeName.textContent = img.getAttribute('pokemonName').toUpperCase()
                 // disPokeImg.src = img.src
                 displayPokemon(data)
-                console.log(`${i} = ${data.name}`)
                 
             }
             // console.log(data)
@@ -63,15 +64,17 @@ function displayPokemon(pokeObj) {
     fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeObj.name}`)
         .then(respo => respo.json())
         .then(species => {
-            pokeStat.textContent = `Catch rate: ${species.capture_rate} ${species.flavor_text_entries[5].flavor_text}`
-        })
-    if(true)    
-        disPokeImg.addEventListener('click', () => {
-            pokeStat.setAttribute(`hidden`, false)
-            console.log(pokeStat.hidden)
-        })
-        disPokeImg.addEventListener('mouseout', () => {
-            pokeStat.setAttribute('hidden', true)
-            console.log(pokeStat.hidden)
+            pokeCatch.textContent = `Catch rate: ${species.capture_rate}`
+            pokeDex.textContent = `${species.flavor_text_entries[5].flavor_text}`
         })
 }
+
+disPokeImg.addEventListener('mouseover', () => {
+    pokeStat.toggleAttribute('hidden') 
+    console.log('hidden')
+})
+
+disPokeImg.addEventListener('mouseleave', () => {
+    pokeStat.toggleAttribute('hidden') 
+    console.log('visible')
+})
