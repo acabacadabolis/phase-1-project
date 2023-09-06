@@ -1,3 +1,5 @@
+let numPokemon = 0
+
 const form = document.querySelector('#input-form')
 const topDisplay = document.querySelector('#topDisplay')
 const disPokeName = document.querySelector('#pokeName')
@@ -5,6 +7,10 @@ const disPokeImg = document.querySelector('#displayPokemon')
 const pokeStat = document.querySelector('#pokemonStats')
 const pokeCatch = document.querySelector('#catchrate')
 const pokeDex = document.querySelector('#pokedex')
+const pokeBox = document.querySelector('#pokemon-box')
+const catchButton = document.querySelector('#catch')
+const myPopUp= document.querySelectorAll('.popuptext')
+const deleteButton = document.querySelector('#button')
 
 for(let i = 0; i < 5; i++){
     
@@ -78,3 +84,68 @@ disPokeImg.addEventListener('mouseleave', () => {
     pokeStat.toggleAttribute('hidden') 
     console.log('visible')
 })
+    // disPokeImg.addEventListener('hover', () => {
+    // })
+}
+
+catchButton.addEventListener("submit", e => {
+    // debugger
+    e.preventDefault()
+    const caughtPokemon = {
+        'name' : disPokeName.textContent,
+        'sprite' : disPokeImg.src
+    }
+    
+    fetch ("http://localhost:3000/pokemon", {
+        method: "POST",
+        headers: { 
+            "Content-Type": "application/json" 
+
+        },
+        body: JSON.stringify(caughtPokemon)
+    })
+        .then(resp => resp.json())
+        .then(pokemon => {
+            
+            // const caughtdiv = document.createElement('div')
+            numPokemon += 1
+            const caughtPokemonImg = document.createElement ("img")
+            const caughtPokemonName = document.createElement ("li")
+            caughtPokemonImg.src = pokemon.sprite
+            caughtPokemonName.textContent = pokemon.name
+            caughtPokemonName.setAttribute('numCaught', numPokemon)
+
+            caughtPokemonName.addEventListener("click", e => {
+                myPopUp[0].src = caughtPokemonImg.src
+                myPopUp[1].textContent = caughtPokemonName.textContent
+                myPopUp[1].setAttribute('numCaught', caughtPokemonName.getAttribute('numCaught'))
+                // console.log('assign data')
+            })
+
+            deleteButton.addEventListener("click", e => {
+                if(myPopUp[1].getAttribute('numCaught') === caughtPokemonName.getAttribute('numCaught')){
+                fetch(`http://localhost:3000/pokemon/${myPopUp[1].getAttribute('numCaught')}`, {
+                    method: "DELETE",
+                    headers:{
+                        "Content-Type" : "application/json"
+                    }
+                })
+                    .then(rsp => rsp.json())
+                    .then(data => console.log(`deleting ${caughtPokemonName.textContent}`))
+
+                    caughtPokemonName.remove()
+              }})
+            // caughtPokemonImg.setAttribute('class', 'popuptext')
+            // caughtPokemonImg.setAttribute('class', '')
+            
+            pokeBox.append(caughtPokemonName)
+            // caughtdiv.append()
+
+        })
+})
+
+function myFunction() {
+    myPopUp.forEach(data => {
+        data.classList.toggle('show')
+    })
+  }
