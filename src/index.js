@@ -22,7 +22,12 @@ for(let i = 0; i < 5; i++){
             const img = document.createElement('img')
             img.setAttribute('topDisplay', (i+1))
             img.alt = data.name
-            img.src = data.sprites.front_default
+            img.setAttribute('shiny', 'no')
+            if(i===parseInt(Math.random()*10000) % 5){
+                img.src = data.sprites.front_shiny
+                img.setAttribute('shiny', 'yes')
+            }
+            else img.src = data.sprites.front_default
             // pokeStat.textContent = `Catch rate :`
 
             topDisplay.prepend(img)
@@ -30,7 +35,7 @@ for(let i = 0; i < 5; i++){
             if(i===4){
                 // disPokeName.textContent = img.getAttribute('pokemonName').toUpperCase()
                 // disPokeImg.src = img.src
-                displayPokemon(data)
+                if(img.getAttribute('shiny')==='yes' ? displayShinyPokemon(data) : displayPokemon(data));
                 
             }
             // console.log(data)
@@ -40,7 +45,7 @@ for(let i = 0; i < 5; i++){
             img.addEventListener('click', () => {
                 // disPokeName.textContent = img.getAttribute('pokemonName').toUpperCase()
                 // disPokeImg.src = img.src
-                displayPokemon(data)
+                if(img.getAttribute('shiny')==='yes' ? displayShinyPokemon(data) : displayPokemon(data));
             })
             })
     
@@ -56,7 +61,7 @@ form.addEventListener('submit', e => {
         .then(data => {
             // disPokeName.textContent = data.name.toUpperCase()
             // disPokeImg.src = data.sprites.front_default
-            displayPokemon(data)
+            if(parseInt(Math.random()*10000) % 3===0 ? displayShinyPokemon(data) :displayPokemon(data));
         })
 })
 
@@ -67,6 +72,17 @@ function createPokemon(pokeObj) {
 function displayPokemon(pokeObj) {
     disPokeName.textContent = pokeObj.name.toUpperCase()
     disPokeImg.src = pokeObj.sprites.front_default
+    fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeObj.name}`)
+        .then(respo => respo.json())
+        .then(species => {
+            pokeCatch.textContent = `Catch rate: ${species.capture_rate}`
+            pokeDex.textContent = `${species.flavor_text_entries[5].flavor_text}`
+        })
+}
+
+function displayShinyPokemon(pokeObj) {
+    disPokeName.textContent = `${pokeObj.name.toUpperCase()} (SHINY)`
+    disPokeImg.src = pokeObj.sprites.front_shiny
     fetch(`https://pokeapi.co/api/v2/pokemon-species/${pokeObj.name}`)
         .then(respo => respo.json())
         .then(species => {
@@ -86,7 +102,6 @@ disPokeImg.addEventListener('mouseleave', () => {
 })
     // disPokeImg.addEventListener('hover', () => {
     // })
-
 
 catchButton.addEventListener("submit", e => {
     // debugger
@@ -148,4 +163,5 @@ function myFunction() {
     myPopUp.forEach(data => {
         data.classList.toggle('show')
     })
-  }
+}
+
