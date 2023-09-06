@@ -86,7 +86,7 @@ disPokeImg.addEventListener('mouseleave', () => {
 })
     // disPokeImg.addEventListener('hover', () => {
     // })
-}
+
 
 catchButton.addEventListener("submit", e => {
     // debugger
