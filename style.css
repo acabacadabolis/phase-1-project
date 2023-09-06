@@ -97,8 +97,6 @@
   /* Toggle this class when clicking on the popup container (hide and show the popup) */
   .popup .show {
     visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s
   }
   
   /* Add animation (fade in the popup) */
@@ -113,5 +111,19 @@
   }
 
   #button {
-    background-color: #737373;
+    background-color: #d51414;
+    margin-right: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  #heart {
+    width: 25%;
+    padding-left: 15px;
+  }
+
+  .popuptext-container {
+    position: absolute;
+    top: 0;
+    left: 250%;
+    margin: auto;
   }

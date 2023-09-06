@@ -11,6 +11,7 @@ const pokeBox = document.querySelector('#pokemon-box')
 const catchButton = document.querySelector('#catch')
 const myPopUp= document.querySelectorAll('.popuptext')
 const deleteButton = document.querySelector('#button')
+const heart = document.querySelector("#heart")
 
 for(let i = 0; i < 5; i++){
     let ranPoke = parseInt(Math.random()*10000) % 151 + 1
@@ -103,18 +104,38 @@ catchButton.addEventListener("submit", e => {
     })
         .then(resp => resp.json())
         .then(pokemon => {
-            numPokemon += 1
+            // numPokemon += 1
+            // console.log(pokemon.id)
             const caughtPokemonImg = document.createElement ("img")
             const caughtPokemonName = document.createElement ("li")
             caughtPokemonImg.src = pokemon.sprite
             caughtPokemonName.textContent = pokemon.name
-            caughtPokemonName.setAttribute('numCaught', numPokemon)
+            caughtPokemonName.setAttribute('numCaught', pokemon.id)
+
+            heart.addEventListener("click", event => {
+                if(myPopUp[1].getAttribute('numCaught')===caughtPokemonName.getAttribute('numCaught')){
+                    if(caughtPokemonName.getAttribute('fav')=== "yes" ? caughtPokemonName.setAttribute('fav',"no") : caughtPokemonName.setAttribute('fav',"yes"));
+                }
+                // if (heart.innerHTML === "♡") {
+                // //   heart.innerHTML = "♥" 
+                //   caughtPokemonName.setAttribute("fav", "yes")
+                // } 
+                // else {
+                //     // heart.innerHTML = "♡"
+                //     caughtPokemonName.setAttribute("fav", "no")
+                // }
+            })
 
             caughtPokemonName.addEventListener("click", e => {
                 myPopUp[0].src = caughtPokemonImg.src
                 myPopUp[1].textContent = caughtPokemonName.textContent
+                
                 myPopUp[1].setAttribute('numCaught', caughtPokemonName.getAttribute('numCaught'))
-            })
+                if(caughtPokemonName.getAttribute('fav')=== "yes" ? myPopUp[2].setAttribute('disabled',true) :  myPopUp[2].removeAttribute('disabled'));
+                if(caughtPokemonName.getAttribute('fav')=== "yes" ? heart.innerHTML = "♥" : heart.innerHTML = "♡");
+                }
+                
+            )
 
             deleteButton.addEventListener("click", e => {
                 if(myPopUp[1].getAttribute('numCaught') === caughtPokemonName.getAttribute('numCaught')){
@@ -138,4 +159,5 @@ function myFunction() {
         data.classList.toggle('show')
     })
 }
+
 
