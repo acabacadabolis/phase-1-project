@@ -1,5 +1,3 @@
-let numPokemon = 0
-
 const form = document.querySelector('#input-form')
 const topDisplay = document.querySelector('#topDisplay')
 const disPokeName = document.querySelector('#pokeName')
@@ -79,12 +77,10 @@ function displayShinyPokemon(pokeObj) {
 
 disPokeImg.addEventListener('mouseover', () => {
     pokeStat.toggleAttribute('hidden') 
-    console.log('hidden')
 })
 
 disPokeImg.addEventListener('mouseleave', () => {
     pokeStat.toggleAttribute('hidden') 
-    console.log('visible')
 })
 
 catchButton.addEventListener("submit", e => {
@@ -104,8 +100,6 @@ catchButton.addEventListener("submit", e => {
     })
         .then(resp => resp.json())
         .then(pokemon => {
-            // numPokemon += 1
-            // console.log(pokemon.id)
             const caughtPokemonImg = document.createElement ("img")
             const caughtPokemonName = document.createElement ("li")
             caughtPokemonImg.src = pokemon.sprite
@@ -116,14 +110,6 @@ catchButton.addEventListener("submit", e => {
                 if(myPopUp[1].getAttribute('numCaught')===caughtPokemonName.getAttribute('numCaught')){
                     if(caughtPokemonName.getAttribute('fav')=== "yes" ? caughtPokemonName.setAttribute('fav',"no") : caughtPokemonName.setAttribute('fav',"yes"));
                 }
-                // if (heart.innerHTML === "♡") {
-                // //   heart.innerHTML = "♥" 
-                //   caughtPokemonName.setAttribute("fav", "yes")
-                // } 
-                // else {
-                //     // heart.innerHTML = "♡"
-                //     caughtPokemonName.setAttribute("fav", "no")
-                // }
             })
 
             caughtPokemonName.addEventListener("click", e => {
@@ -141,9 +127,6 @@ catchButton.addEventListener("submit", e => {
                 if(myPopUp[1].getAttribute('numCaught') === caughtPokemonName.getAttribute('numCaught')){
                 fetch(`http://localhost:3000/pokemon/${myPopUp[1].getAttribute('numCaught')}`, {
                     method: "DELETE",
-                    headers:{
-                        "Content-Type" : "application/json"
-                    }
                 })
                     .then(rsp => rsp.json())
                     .then(data => console.log(`deleting ${caughtPokemonName.textContent}`))
